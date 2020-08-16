@@ -1,10 +1,12 @@
 ﻿using CoreApiWithMongo.API.Model;
 using CoreApiWithMongo.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace BooksApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BooksController : ControllerBase
@@ -17,10 +19,12 @@ namespace BooksApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<List<Book>> Get() =>
             _bookService.Get();
 
         [HttpGet("{id:length(24)}", Name = "GetBook")]
+        
         public ActionResult<Book> Get(string id)
         {
             var book = _bookService.Get(id);
